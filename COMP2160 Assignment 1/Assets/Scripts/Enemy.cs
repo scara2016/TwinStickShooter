@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour
     private Vector2 endViewportSpace;
     private Vector2 direction;
     private Camera cam;
+    private bool enteredScreen = false;
     
 
     private int enemySpawnSide;
@@ -86,6 +87,11 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(enteredScreen == false)
+        if(cam.WorldToViewportPoint(this.transform.position).x<1&& cam.WorldToViewportPoint(this.transform.position).x > 0 && cam.WorldToViewportPoint(this.transform.position).y < 1 && cam.WorldToViewportPoint(this.transform.position).y > 0)
+        {
+            enteredScreen = true;
+        }
         //when player dies
         if (player == null)
         {
@@ -105,8 +111,9 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
 
+        
+        if(enteredScreen)
         if (shootTimer > 0)
         {
             shootTimer -= Time.deltaTime;

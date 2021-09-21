@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
     public float lifespan = 1f;
     private float timer;
     private Vector2 bulletDirection;
+    private GameManager gameManager;
     public Vector2 BulletDirection
     {
         set
@@ -23,6 +24,7 @@ public class Bullet : MonoBehaviour
     void Start()
     {
         timer = lifespan;
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
@@ -32,10 +34,14 @@ public class Bullet : MonoBehaviour
         {
             timer -= Time.deltaTime;
         }
-        transform.Translate(bulletSpeed * bulletDirection * Time.deltaTime);
+        transform.Translate(bulletSpeed * bulletDirection.normalized * Time.deltaTime);
         if (timer <= 0)
         {
             Destroy(this.gameObject);
+        }
+        if (gameManager.EdgeReached(this.transform) > 0)
+        {
+           Destroy(this.gameObject);
         }
     }
     void OnTriggerEnter2D(Collider2D collision)

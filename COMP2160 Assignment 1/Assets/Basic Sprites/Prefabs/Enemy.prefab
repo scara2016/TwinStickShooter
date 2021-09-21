@@ -98,16 +98,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9580452e80f896a44ad90782efc6f1bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
+  speed: 0.47
   enemyBulletPrefab: {fileID: 8201331927509140582, guid: d35db47a79d10de47a2ce4d715fb6e07,
     type: 3}
   coinPrefab: {fileID: 2143910958589481548, guid: 1fbe3b0b03b660c4bbeabee481c268f7,
     type: 3}
-  expiryTimer: 4
+  expiryTimer: 6.09
   ammo: 1
   timeBetweenShots: 0.2
-  minTimeToShoot: 0.5
-  maxTimeToShoot: 2
+  minTimeToShoot: 0
+  maxTimeToShoot: 1
 --- !u!60 &-7091076532967250279
 PolygonCollider2D:
   m_ObjectHideFlags: 0
