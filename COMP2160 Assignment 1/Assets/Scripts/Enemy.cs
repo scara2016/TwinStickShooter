@@ -10,11 +10,10 @@ public class Enemy : MonoBehaviour
     public float expiryTimer = 2f;
     public int ammo = 1;
     public float timeBetweenShots = 1f;
-    public float minTimeToShoot = 0.5f;
-    public float maxTimeToShoot = 2f;
+    
     private GameObject player;
     private Vector2 directionToPlayer;
-    private float shootTimer;
+    private float shootTimer = 0.1f;
     private float deathTimer;
     private BulletSpawner bulletSpawner;
     private float endX;
@@ -53,7 +52,7 @@ public class Enemy : MonoBehaviour
         cam = FindObjectOfType<Camera>();
         player = GameObject.Find("Player");
         bulletSpawner = GetComponentInChildren<BulletSpawner>();
-        shootTimer = Random.Range(minTimeToShoot , maxTimeToShoot);
+        
 
         switch (enemySpawnSide)
         {
@@ -87,6 +86,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
         if(enteredScreen == false)
         if(cam.WorldToViewportPoint(this.transform.position).x<1&& cam.WorldToViewportPoint(this.transform.position).x > 0 && cam.WorldToViewportPoint(this.transform.position).y < 1 && cam.WorldToViewportPoint(this.transform.position).y > 0)
         {
@@ -118,14 +118,7 @@ public class Enemy : MonoBehaviour
         {
             shootTimer -= Time.deltaTime;
         }
-        if (shootTimer <= 0)
-            if (ammo>0) {
-                {
-                    bulletSpawner.CreateBullet(directionToPlayer, enemyBulletPrefab);
-                    ammo -= 1;
-                    shootTimer = timeBetweenShots;
-                }
-            }
+         
         transform.Translate(direction*speed*Time.deltaTime,Space.World);
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -133,5 +126,19 @@ public class Enemy : MonoBehaviour
         Coin coin = Instantiate(coinPrefab);
         coin.transform.localPosition = transform.position;
         Destroy(gameObject);
+    }
+    public void Shoot()
+    {
+        if (shootTimer <= 0)
+        {
+            if (ammo > 0)
+            {
+
+                bulletSpawner.CreateBullet(directionToPlayer, enemyBulletPrefab);
+                ammo -= 1;
+                shootTimer = timeBetweenShots;
+            }
+
+        }   
     }
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8555396808530174552}
   - component: {fileID: -7091076532967250279}
   - component: {fileID: 5283760065485582659}
+  - component: {fileID: 1528956316878863133}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -103,11 +104,9 @@ MonoBehaviour:
     type: 3}
   coinPrefab: {fileID: 2143910958589481548, guid: 1fbe3b0b03b660c4bbeabee481c268f7,
     type: 3}
-  expiryTimer: 6.09
-  ammo: 1
+  expiryTimer: 4.24
+  ammo: 25
   timeBetweenShots: 0.2
-  minTimeToShoot: 0
-  maxTimeToShoot: 1
 --- !u!60 &-7091076532967250279
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -157,6 +156,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1528956316878863133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78374835863124431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8a5c8637ea5f664e9ae496143be1e8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bias: 3
+  timeStep: 1
+  timeToBeat: 0.1
+  resSmoothTime: 0.1
 --- !u!1001 &3500717847068095885
 PrefabInstance:
   m_ObjectHideFlags: 0
