@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Flock/Behavior/Cohesion")]
 public class CohesionBehavior : FlockBehavior
 {
-    public override Vector2 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock)
+    public override Vector2 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock, Transform flockTarget)
     {
         if (context.Count == 0)
         {
@@ -13,10 +13,13 @@ public class CohesionBehavior : FlockBehavior
         }
 
         Vector2 cohesionMove = Vector2.zero;
-        foreach(Transform item in context)
-        {
-            cohesionMove += (Vector2)item.position;
-        }
+        foreach (Transform item in context)
+            if (item.gameObject.CompareTag("FlockAgent"))
+            {
+                {
+                    cohesionMove += (Vector2)item.position;
+                }
+            }
         cohesionMove /= context.Count;
 
         cohesionMove -= (Vector2)agent.transform.position;

@@ -5,5 +5,5 @@ using UnityEngine;
 public abstract class FlockBehavior : ScriptableObject
 {
     // Start is called before the first frame update
-    public abstract Vector2 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock);
+    public abstract Vector2 CalculateMove(FlockAgent agent, List<Transform> context, Flock flock, Transform flockTarget);
 }

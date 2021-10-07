@@ -123,9 +123,12 @@ public class Enemy : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Coin coin = Instantiate(coinPrefab);
-        coin.transform.localPosition = transform.position;
-        Destroy(gameObject);
+        if (!collision.gameObject.TryGetComponent(typeof(Coin), out Component component) && !collision.gameObject.TryGetComponent(typeof(FlockAgent), out Component component1))
+        {
+            Coin coin = Instantiate(coinPrefab);
+            coin.transform.localPosition = transform.position;
+            Destroy(gameObject);
+        }
     }
     public void Shoot()
     {

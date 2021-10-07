@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     private float timer;
     private Vector2 bulletDirection;
     private GameManager gameManager;
+    public bool canColideWithFlock;
     public Vector2 BulletDirection
     {
         set
@@ -46,6 +47,17 @@ public class Bullet : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(gameObject);
+        if(canColideWithFlock)
+        if (!collision.gameObject.TryGetComponent(typeof(Coin), out Component component) && !collision.gameObject.TryGetComponent(typeof(FlockAgent), out Component component1))
+        {
+            Destroy(gameObject);
+        }
+        else
+            {
+                if (!collision.gameObject.TryGetComponent(typeof(Coin), out Component component2))
+                {
+                    Destroy(gameObject);
+                }
+            }
     }
 }

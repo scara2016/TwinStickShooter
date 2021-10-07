@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Flock : MonoBehaviour
 {
+    public Transform flockTarget;
     public FlockAgent agentPrefab;
     List<FlockAgent> agents = new List<FlockAgent>();
     public FlockBehavior behavior;
+    private Camera cam;
+    private PlayerMovement player;
 
     [Range(10, 1000)]
     public int startingCount = 250;
@@ -34,38 +37,54 @@ public class Flock : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = FindObjectOfType<PlayerMovement>();
+        cam = FindObjectOfType<Camera>();
         squareMaxSpeed = maxSpeed * maxSpeed;
         squareNeighborRadius = neighborRadius * neighborRadius;
         squareAvoidanceRadius = squareNeighborRadius * squareAvoidanceRadius * squareAvoidanceRadius;
 
-        for(int i = 0; i< startingCount; i++)
+        for (int i = 0; i < startingCount; i++)
         {
             FlockAgent newAgent = Instantiate(
                 agentPrefab,
-                Random.insideUnitCircle * startingCount * AgentDensity,
-                Quaternion.Euler(Vector3.forward*Random.Range(0f, 360f)),
+                (Vector2)cam.ViewportToWorldPoint(new Vector2(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f))),
+                Quaternion.Euler(Vector3.forward * Random.Range(0f, 360f)),
                 transform
-                ) ;
+                );
             newAgent.name = "Agent" + i;
             agents.Add(newAgent);
         }
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         foreach(FlockAgent agent in agents)
         {
             List<Transform> context = GetNearbyObjects(agent);
-            Vector2 move = behavior.CalculateMove(agent, context, this);
+            Vector2 move = behavior.CalculateMove(agent, context, this, flockTarget);
             move *= driveFactor;
             if(move.sqrMagnitude > squareMaxSpeed)
             {
                 move = move.normalized * maxSpeed;
             }
             agent.Move(move);
+            if (agents.Count < startingCount)
+            {
+                FlockAgent newAgent = Instantiate(
+                 agentPrefab,
+                 (Vector2)cam.ViewportToWorldPoint(new Vector2(-0.5f, Random.Range(0.0f, 1.0f))),
+                 Quaternion.Euler(Vector3.forward * Random.Range(0f, 360f)),
+                 transform
+                 );
+                newAgent.name = "Agent" + agents.Count+1;
+                agents.Add(newAgent);
+            }
         }
     }
+
 
     List<Transform> GetNearbyObjects(FlockAgent agent)
     {
@@ -80,4 +99,8 @@ public class Flock : MonoBehaviour
         }
         return context;
     }
+    
+    
+
+    
 }

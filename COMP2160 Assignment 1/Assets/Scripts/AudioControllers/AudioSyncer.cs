@@ -44,7 +44,7 @@ public class AudioSyncer : MonoBehaviour
     }
     public virtual void OnBeat()
     {
-        Debug.Log("beat");
+        
         m_timer = 0;
         m_isBeat = true;
     }

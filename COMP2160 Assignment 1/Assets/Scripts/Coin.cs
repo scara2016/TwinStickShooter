@@ -29,7 +29,10 @@ public class Coin : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        scoreKeeper.AddScore(worth);
-        Destroy(gameObject);
+        if (!collision.gameObject.TryGetComponent(typeof(FlockAgent), out Component component))
+        {
+            scoreKeeper.AddScore(worth);
+            Destroy(gameObject);
+        }
     }
 }

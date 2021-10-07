@@ -11,11 +11,20 @@ public class PlayerMovement : MonoBehaviour
     private bool underDown = true;
     private GameManager gameManager;
     private Camera cam;
+    private Collider2D playerCollider;
+    public Collider2D PlayerCollider
+    {
+        get
+        {
+            return playerCollider;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         cam = FindObjectOfType<Camera>();
+        playerCollider = GetComponent<Collider2D>();
         gameManager = FindObjectOfType<GameManager>();
         gameManager.GameStarted();
     }
@@ -95,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.gameObject.TryGetComponent(typeof(Coin), out Component component))
+        if (!collision.gameObject.TryGetComponent(typeof(Coin), out Component component) && !collision.gameObject.TryGetComponent(typeof(FlockAgent), out Component component1))
         {
             gameManager.GameEnded();
             this.gameObject.SetActive(false);
